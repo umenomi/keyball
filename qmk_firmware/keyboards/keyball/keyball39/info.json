@@ -1,0 +1,9 @@
+{
+  "manufacturer": "Yowkees",
+  "keyboard_name": "Keyball39",
+  "usb": {
+    "device_version": "0.0.1",
+    "pid": "0x0200",
+    "vid": "0x5957"
+  }
+}
