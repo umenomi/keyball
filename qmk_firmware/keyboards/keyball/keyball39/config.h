@@ -79,7 +79,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #undef LOCKING_RESYNC_ENABLE
 // #define NO_ACTION_MACRO
 // #define NO_ACTION_FUNCTION
-
-#define TAPPING_FORCE_HOLD
-
-#define KEYBALL_SCROLLSNAP_TENSION_THRESHOLD 1

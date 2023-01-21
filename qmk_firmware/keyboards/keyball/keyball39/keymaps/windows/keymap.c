@@ -19,37 +19,55 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include QMK_KEYBOARD_H
 
 #include "quantum.h"
-// #include "keymap_jp.h"
+#include "./keymap_jp.h"
 
-#define JS_YEN 0x89
-#define JS_BSLSH 0x87
+//Tap Dance Declarations
+enum {
+  TD_ESC_CAPS = 0,
+  TD_YEN_PIPE,
+  TD_HIHN_EQL,
+  TD_LBRC_LBRC,
+  TD_RBRC_RBRC,
+  TD_BSLSH_UDSCR
+};
+
+//Tap Dance Definitions
+qk_tap_dance_action_t tap_dance_actions[] = {
+  [TD_ESC_CAPS]  = ACTION_TAP_DANCE_DOUBLE(JS_ESC, JS_CAPS),
+  [TD_YEN_PIPE]  = ACTION_TAP_DANCE_DOUBLE(JS_YEN, S(JS_YEN)),
+  [TD_HIHN_EQL]  = ACTION_TAP_DANCE_DOUBLE(JS_HIHU, S(JS_HIHU)),
+  [TD_LBRC_LBRC] = ACTION_TAP_DANCE_DOUBLE(JS_LBRC, S(JS_LBRC)),
+  [TD_RBRC_RBRC] = ACTION_TAP_DANCE_DOUBLE(JS_RBRC, S(JS_RBRC)),
+  [TD_BSLSH_UDSCR] = ACTION_TAP_DANCE_DOUBLE(JS_BSLSH, S(JS_BSLSH))
+};
+
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_universal(
-    KC_Q        , KC_W     , KC_E         , KC_R     , KC_T     ,                            KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     ,
-    KC_A        , KC_S     , KC_D         , KC_F     , KC_G     ,                            KC_H     , KC_J     , KC_K     , KC_L     , RSFT_T(KC_SCLN),
-    LCTL_T(KC_Z), KC_X     , KC_C         , KC_V     , KC_B     ,                            KC_N     , KC_M     , KC_COMM  , KC_DOT   , RCTL_T(KC_SLSH),
-    KC_TAB      , KC_LALT  , KC_LEFT_GUI  ,LT(1,KC_LNG2),LT(2,KC_SPC),LT(3,KC_LNG1),KC_BSPC,LT(2,KC_ENT),XXXXXXX , XXXXXXX  , XXXXXXX  , LT(3,KC_ESC)
+    JS_Q        , JS_W     , JS_E         , JS_R     , JS_T     ,                            JS_Y     , JS_U     , JS_I     , JS_O     , JS_P     ,
+    RSFT_T(JS_A), JS_S     , JS_D         , JS_F     , JS_G     ,                            JS_H     , JS_J     , JS_K     , JS_L     , RSFT_T(JS_SCLN),
+    LCTL_T(JS_Z), JS_X     , JS_C         , JS_V     , JS_B     ,                            JS_N     , JS_M     , JS_COMM  , JS_DOT   , RCTL_T(JS_SLSH),
+    JS_TAB      , JS_LALT  , JS_LEFT_GUI  ,LT(1,JS_LNG2),LT(2,JS_SPC),LT(3,JS_LNG1),JS_BSPC,LT(2,JS_ENT),XXXXXXX , XXXXXXX  , XXXXXXX  , LT(3,JS_ESC)
   ),
 
   [1] = LAYOUT_universal(
-    XXXXXXX   , S(KC_7)  , S(KC_8)  , S(KC_9)  , S(KC_8)    ,                            S(KC_9)    , S(KC_SCLN), KC_MINS    , KC_EQL   , JS_YEN    ,
-    KC_LSFT   , S(KC_4)  , S(KC_5)  , S(KC_6)  , KC_RBRC    ,                            KC_BSLS    , S(KC_SLSH), S(KC_QUOT) , KC_LBRC  , RSFT_T(S(KC_QUOT)),
-    KC_LCTL   , S(KC_1)  , S(KC_2)  , S(KC_3)  , S(KC_COMM) ,                            S(KC_DOT)  , JS_BSLSH  , S(KC_COMM) , S(KC_DOT), RCTL_T(S(KC_SLSH))  ,
-    _______   , _______  , _______  , XXXXXXX  , XXXXXXX    , XXXXXXX  ,        KC_DEL ,  _______   , XXXXXXX   , XXXXXXX    , XXXXXXX  , _______
+    XXXXXXX   , S(JS_7)  , S(JS_8)  , S(JS_9)  , S(JS_8)          ,                            S(JS_9)          , S(JS_SCLN)          , TD(TD_HIHN_EQL) , JS_HAT   , TD(TD_YEN_PIPE),
+    JS_LSFT   , S(JS_4)  , S(JS_5)  , S(JS_6)  , TD(TD_LBRC_LBRC) ,                            TD(TD_RBRC_RBRC) , S(JS_SLSH)          , S(JS_CLN)       , JS_ATMK  , RSFT_T(JS_CLN),
+    JS_LCTL   , S(JS_1)  , S(JS_2)  , S(JS_3)  , S(JS_COMM)       ,                            S(JS_DOT)        , TD(TD_BSLSH_UDSCR)  , S(JS_COMM)      , S(JS_DOT), RCTL_T(JS_SLSH),
+    _______   , _______  , _______  , XXXXXXX  , XXXXXXX          , XXXXXXX  ,        JS_DEL ,  _______         , XXXXXXX   , XXXXXXX         , XXXXXXX  , _______
   ),
 
   [2] = LAYOUT_universal(
-    XXXXXXX   , KC_7     , KC_8     , KC_9     , KC_0     ,                            KC_HOME  , KC_LEFT  , KC_UP    , KC_RGHT  , KC_END   ,
-    KC_LSFT   , KC_4     , KC_5     , KC_6     , XXXXXXX  ,                            KC_PGUP  , KC_BTN1  , KC_DOWN  , KC_BTN2  , KC_RSFT  ,
-    KC_LCTL   , KC_1     , KC_2     , KC_3     , XXXXXXX  ,                            KC_PGDN  , KC_BTN4  , KC_BTN3  , KC_BTN5  , KC_LCTL  ,
-    _______   , _______  , _______  , XXXXXXX  , XXXXXXX  , XXXXXXX  ,      KC_DEL  ,  _______  , XXXXXXX  , XXXXXXX  , XXXXXXX  , _______
+    XXXXXXX   , JS_7     , JS_8     , JS_9     , JS_0     ,                            JS_HOME  , JS_LEFT  , JS_UP    , JS_RGHT  , JS_END   ,
+    JS_LSFT   , JS_4     , JS_5     , JS_6     , XXXXXXX  ,                            JS_PGUP  , JS_BTN1  , JS_DOWN  , JS_BTN2  , JS_RSFT  ,
+    JS_LCTL   , JS_1     , JS_2     , JS_3     , XXXXXXX  ,                            JS_PGDN  , JS_BTN4  , JS_BTN3  , JS_BTN5  , JS_LCTL  ,
+    _______   , _______  , _______  , XXXXXXX  , XXXXXXX  , XXXXXXX  ,      JS_DEL  ,  _______  , XXXXXXX  , XXXXXXX  , XXXXXXX  , _______
   ),
 
   [3] = LAYOUT_universal(
-    XXXXXXX   , KC_F7    , KC_F8    , KC_F9    , KC_F10   ,                            XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX , XXXXXXX ,
-    KC_LSFT   , KC_F4    , KC_F5    , KC_F6    , KC_F11   ,                            SCRL_DVD , CPI_I100 , XXXXXXX  , XXXXXXX , KC_RSFT ,
-    KC_LCTL   , KC_F1    , KC_F2    , KC_F3    , KC_F12   ,                            SCRL_DVI , CPI_D100 , XXXXXXX  , XXXXXXX , KC_LCTL ,
+    XXXXXXX   , JS_F7    , JS_F8    , JS_F9    , JS_F10   ,                            XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX , XXXXXXX ,
+    JS_LSFT   , JS_F4    , JS_F5    , JS_F6    , JS_F11   ,                            SCRL_DVD , CPI_I100 , XXXXXXX  , XXXXXXX , JS_RSFT ,
+    JS_LCTL   , JS_F1    , JS_F2    , JS_F3    , JS_F12   ,                            SCRL_DVI , CPI_D100 , XXXXXXX  , XXXXXXX , JS_LCTL ,
     _______   , _______  , _______  , KBC_RST  , KBC_SAVE , XXXXXXX  ,      XXXXXXX ,  XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX , _______
   ),
 };
@@ -59,6 +77,19 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     // Auto enable scroll mode when the highest layer is 3
     keyball_set_scroll_mode(get_highest_layer(state) == 3);
     return state;
+}
+
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case TD(TD_LBRC_LBRC):
+    case TD(TD_RBRC_RBRC):
+    case TD(TD_BSLSH_UDSCR):
+    case TD(TD_HIHN_EQL):
+    case TD(TD_YEN_PIPE):
+      return 200;
+    default:
+      return TAPPING_TERM;
+  }
 }
 
 #ifdef OLED_ENABLE
