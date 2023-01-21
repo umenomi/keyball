@@ -501,8 +501,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
         // See process_action() in quantum/action.c for details.
         case KC_MS_BTN1 ... KC_MS_BTN8: {
             extern void register_button(bool, enum mouse_buttons);
-            // ビルド時エラーになるので一旦コメントアウト
-            // register_button(record->event.pressed, MOUSE_BTN_MASK(keycode - KC_MS_BTN1));
+            register_button(record->event.pressed, MOUSE_BTN_MASK(keycode - KC_MS_BTN1));
             // to apply QK_MODS actions, allow to process others.
             return true;
         }
