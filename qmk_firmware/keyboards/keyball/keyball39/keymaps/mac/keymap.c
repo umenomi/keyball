@@ -21,6 +21,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "quantum.h"
 #include "./keymap_jp.h"
 
+uint16_t hold_timers[MATRIX_ROWS][MATRIX_COLS];
+uint16_t mem_keycode;
+
+enum custum_keycodes {
+  // hold: CTRL, tap: question
+  HT_CTL_QUES = KEYBALL_SAFE_RANGE
+};
+
 //Tap Dance Declarations
 enum {
   TD_ESC_CAPS = 0,
@@ -51,9 +59,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [1] = LAYOUT_universal(
-    XXXXXXX   , S(JS_7)  , S(JS_8)  , S(JS_9)  , S(JS_8)          ,                            S(JS_9)          , S(JS_SCLN)          , TD(TD_HIHN_EQL) , JS_HAT   , TD(TD_YEN_PIPE),
-    JS_LSFT   , S(JS_4)  , S(JS_5)  , S(JS_6)  , TD(TD_LBRC_LBRC) ,                            TD(TD_RBRC_RBRC) , S(JS_SLSH)          , S(JS_CLN)       , JS_ATMK  , RSFT_T(JS_CLN),
-    JS_LEFT_GUI,S(JS_1)  , S(JS_2)  , S(JS_3)  , S(JS_COMM)       ,                            S(JS_DOT)        , TD(TD_BSLSH_UDSCR)  , S(JS_COMM)      , S(JS_DOT), RGUI_T(JS_SLSH),
+    XXXXXXX   , S(JS_7)  , S(JS_8)  , S(JS_9)  , S(JS_8)          ,                            S(JS_9)          , XXXXXXX             , TD(TD_HIHN_EQL) , JS_HAT   , TD(TD_YEN_PIPE),
+    JS_LSFT   , S(JS_4)  , S(JS_5)  , S(JS_6)  , TD(TD_LBRC_LBRC) ,                            TD(TD_RBRC_RBRC) , S(JS_SCLN)          , S(JS_CLN)       , JS_ATMK  , RSFT_T(JS_CLN),
+    JS_LEFT_GUI,S(JS_1)  , S(JS_2)  , S(JS_3)  , S(JS_COMM)       ,                            S(JS_DOT)        , TD(TD_BSLSH_UDSCR)  , S(JS_COMM)      , S(JS_DOT), HT_CTL_QUES,
     _______   , _______  , _______  , XXXXXXX  , XXXXXXX          , XXXXXXX  ,        JS_DEL ,  _______         , XXXXXXX   , XXXXXXX         , XXXXXXX  , _______
   ),
 
@@ -79,6 +87,50 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     return state;
 }
 
+bool is_tap (keyrecord_t *record) {
+  return hold_timers[record->event.key.row][record->event.key.col]
+  && timer_elapsed(hold_timers[record->event.key.row][record->event.key.col]) < TAPPING_TERM;
+}
+
+void tap_question(void){
+  register_code(JS_RSFT);
+  tap_code(JS_SLSH);
+  unregister_code(JS_RSFT);
+};
+
+void mod_tap_action(keyrecord_t *record, bool is_same_prev, uint8_t mod, void (*cb)(void) ) {
+  if (record->event.pressed) {
+    add_mods(MOD_BIT(mod));
+  } else {
+    if (is_same_prev || is_tap(record)) {
+      del_mods(MOD_BIT(mod));
+      cb();
+    } else {
+      unregister_code(mod);
+    }
+  }
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  // prev keycode
+  uint16_t prev_keycode = mem_keycode;
+  mem_keycode = keycode;
+  bool is_same_prev = prev_keycode == keycode;
+
+  // record pressed timer
+  if (record->event.pressed) {
+    hold_timers[record->event.key.row][record->event.key.col] = timer_read();
+  }
+
+  switch (keycode) {
+    case HT_CTL_QUES: // hold: CTRL, tap: question
+      mod_tap_action(record, is_same_prev, JS_RCTL, tap_question);
+      return false;
+    default:
+      return true;
+  }
+}
+
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case TD(TD_LBRC_LBRC):
@@ -89,6 +141,17 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
       return 200;
     default:
       return TAPPING_TERM;
+  }
+}
+
+bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case LT(1,JS_LNG2):
+    case LT(3,JS_LNG1):
+    case LT(3,JS_ESC):
+      return false;
+    default:
+      return true;
   }
 }
 
