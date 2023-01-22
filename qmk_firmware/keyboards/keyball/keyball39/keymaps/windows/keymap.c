@@ -53,15 +53,15 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_universal(
     JS_Q        , JS_W     , JS_E         , JS_R     , JS_T     ,                            JS_Y     , JS_U     , JS_I     , JS_O     , JS_P     ,
-    RSFT_T(JS_A), JS_S     , JS_D         , JS_F     , JS_G     ,                            JS_H     , JS_J     , JS_K     , JS_L     , RSFT_T(JS_SCLN),
+    JS_A        , JS_S     , JS_D         , JS_F     , JS_G     ,                            JS_H     , JS_J     , JS_K     , JS_L     , RSFT_T(JS_SCLN),
     LCTL_T(JS_Z), JS_X     , JS_C         , JS_V     , JS_B     ,                            JS_N     , JS_M     , JS_COMM  , JS_DOT   , RCTL_T(JS_SLSH),
     JS_TAB      , JS_LALT  , JS_LEFT_GUI  ,LT(1,JS_LNG2),LT(2,JS_SPC),LT(3,JS_LNG1),JS_BSPC,LT(2,JS_ENT),XXXXXXX , XXXXXXX  , XXXXXXX  , LT(3,JS_ESC)
   ),
 
   [1] = LAYOUT_universal(
-    XXXXXXX   , S(JS_7)  , S(JS_8)  , S(JS_9)  , S(JS_8)          ,                            S(JS_9)          , XXXXXXX             , TD(TD_HIHN_EQL) , JS_HAT   , TD(TD_YEN_PIPE),
-    JS_LSFT   , S(JS_4)  , S(JS_5)  , S(JS_6)  , TD(TD_LBRC_LBRC) ,                            TD(TD_RBRC_RBRC) , S(JS_SCLN)          , S(JS_CLN)       , JS_ATMK  , RSFT_T(JS_CLN),
-    JS_LCTL   , S(JS_1)  , S(JS_2)  , S(JS_3)  , S(JS_COMM)       ,                            S(JS_DOT)        , TD(TD_BSLSH_UDSCR)  , S(JS_COMM)      , S(JS_DOT), HT_CTL_QUES,
+    XXXXXXX   , S(JS_7)  , S(JS_8)  , S(JS_9)  , S(JS_8)          ,                            S(JS_9)          , S(JS_HIHU)  , JS_HIHU   , JS_HAT   , TD(TD_YEN_PIPE),
+    JS_LSFT   , S(JS_4)  , S(JS_5)  , S(JS_6)  , TD(TD_LBRC_LBRC) ,                            TD(TD_RBRC_RBRC) , S(JS_SCLN)  , S(JS_CLN) , JS_ATMK  , RSFT_T(JS_CLN),
+    JS_LCTL   , S(JS_1)  , S(JS_2)  , S(JS_3)  , S(JS_COMM)       ,                            S(JS_DOT)        , S(JS_BSLSH) , S(JS_COMM), S(JS_DOT), HT_CTL_QUES,
     _______   , _______  , _______  , XXXXXXX  , XXXXXXX          , XXXXXXX  ,        JS_DEL ,  _______         , XXXXXXX   , XXXXXXX         , XXXXXXX  , _______
   ),
 
