@@ -62,7 +62,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     XXXXXXX   , S(JS_7)  , S(JS_8)  , S(JS_9)  , S(JS_8)          ,                            S(JS_9)          , S(JS_HIHU)  , JS_HIHU   , JS_HAT   , TD(TD_YEN_PIPE),
     JS_LSFT   , S(JS_4)  , S(JS_5)  , S(JS_6)  , TD(TD_LBRC_LBRC) ,                            TD(TD_RBRC_RBRC) , S(JS_SCLN)  , S(JS_CLN) , JS_ATMK  , RSFT_T(JS_CLN),
     JS_LEFT_GUI,S(JS_1)  , S(JS_2)  , S(JS_3)  , S(JS_COMM)       ,                            S(JS_DOT)        , S(JS_BSLSH) , S(JS_COMM), S(JS_DOT), HT_CTL_QUES,
-    _______   , _______  , _______  , XXXXXXX  , XXXXXXX          , XXXXXXX  ,        JS_DEL ,  _______         , XXXXXXX   , XXXXXXX         , XXXXXXX  , _______
+    _______   , _______  , _______  , XXXXXXX  , XXXXXXX          , XXXXXXX  ,       _______ ,  _______         , XXXXXXX   , XXXXXXX         , XXXXXXX  , _______
   ),
 
   [2] = LAYOUT_universal(
@@ -138,7 +138,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     case TD(TD_BSLSH_UDSCR):
     case TD(TD_HIHN_EQL):
     case TD(TD_YEN_PIPE):
-      return 200;
+      return 190;
     default:
       return TAPPING_TERM;
   }

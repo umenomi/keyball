@@ -40,7 +40,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define KEYBALL_SCROLLSNAP_TENSION_THRESHOLD 1
 
-#define TAPPING_TERM 150
+#define TAPPING_TERM 170
 #define TAPPING_TERM_PER_KEY
 
 #define RETRO_TAPPING_PER_KEY
