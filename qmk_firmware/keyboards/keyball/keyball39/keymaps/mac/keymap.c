@@ -69,7 +69,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     XXXXXXX   , JS_7     , JS_8     , JS_9     , JS_0     ,                            JS_HOME  , JS_LEFT  , JS_UP    , JS_RGHT  , JS_END   ,
     JS_LSFT   , JS_4     , JS_5     , JS_6     , XXXXXXX  ,                            JS_PGUP  , JS_BTN1  , JS_DOWN  , JS_BTN2  , JS_RSFT  ,
     JS_LEFT_GUI,JS_1     , JS_2     , JS_3     , XXXXXXX  ,                            JS_PGDN  , JS_BTN4  , JS_BTN3  , JS_BTN5  , JS_RIGHT_GUI,
-    _______   , _______  , _______  , XXXXXXX  , XXXXXXX  , XXXXXXX  ,      JS_DEL  ,  _______  , XXXXXXX  , XXXXXXX  , XXXXXXX  , _______
+    _______   , _______  , _______  , XXXXXXX  , XXXXXXX  , XXXXXXX  ,      JS_DEL  ,  JS_RALT  , XXXXXXX  , XXXXXXX  , XXXXXXX  , _______
   ),
 
   [3] = LAYOUT_universal(
@@ -160,7 +160,8 @@ bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
 #    include "lib/oledkit/oledkit.h"
 
 void oledkit_render_info_user(void) {
-    keyball_oled_render_keyinfo();
-    keyball_oled_render_ballinfo();
+  keyball_oled_render_layerinfo();
+  keyball_oled_render_keyinfo();
+  keyball_oled_render_ballinfo();
 }
 #endif

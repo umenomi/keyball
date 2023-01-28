@@ -26,7 +26,16 @@ uint16_t mem_keycode;
 
 enum custum_keycodes {
   // hold: CTRL, tap: question
-  HT_CTL_QUES = KEYBALL_SAFE_RANGE
+  HT_CTL_QUES = KEYBALL_SAFE_RANGE,
+  CK_SCROLL_MODE
+};
+
+enum layers {
+  DEFAULT_LAYER = 0,
+  SYMBOL_LAYER,
+  NUMBER_LAYER,
+  FUNCTION_LAYER,
+  MOUSE_LAYER
 };
 
 //Tap Dance Declarations
@@ -51,53 +60,91 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [0] = LAYOUT_universal(
+  [DEFAULT_LAYER] = LAYOUT_universal(
     JS_Q        , JS_W     , JS_E         , JS_R     , JS_T     ,                            JS_Y     , JS_U     , JS_I     , JS_O     , JS_P     ,
     JS_A        , JS_S     , JS_D         , JS_F     , JS_G     ,                            JS_H     , JS_J     , JS_K     , JS_L     , RSFT_T(JS_SCLN),
     LCTL_T(JS_Z), JS_X     , JS_C         , JS_V     , JS_B     ,                            JS_N     , JS_M     , JS_COMM  , JS_DOT   , RCTL_T(JS_SLSH),
-    JS_TAB      , JS_LALT  , JS_LEFT_GUI  ,LT(1,JS_LNG2),LT(2,JS_SPC),LT(3,JS_LNG1),JS_BSPC,LT(2,JS_ENT),XXXXXXX , XXXXXXX  , XXXXXXX  , LT(3,JS_ESC)
+    JS_TAB      , JS_LALT  , JS_LEFT_GUI  ,LT(1,JS_LNG2),LT(2,JS_SPC),LT(3,JS_LNG1),JS_BSPC,LT(2,JS_ENT),XXXXXXX , XXXXXXX  , XXXXXXX  , JS_ESC
   ),
 
-  [1] = LAYOUT_universal(
+  [SYMBOL_LAYER] = LAYOUT_universal(
     XXXXXXX   , S(JS_7)  , S(JS_8)  , S(JS_9)  , S(JS_8)          ,                            S(JS_9)          , S(JS_HIHU)  , JS_HIHU   , JS_HAT   , TD(TD_YEN_PIPE),
     JS_LSFT   , S(JS_4)  , S(JS_5)  , S(JS_6)  , TD(TD_LBRC_LBRC) ,                            TD(TD_RBRC_RBRC) , S(JS_SCLN)  , S(JS_CLN) , JS_ATMK  , RSFT_T(JS_CLN),
     JS_LCTL   , S(JS_1)  , S(JS_2)  , S(JS_3)  , S(JS_COMM)       ,                            S(JS_DOT)        , S(JS_BSLSH) , S(JS_COMM), S(JS_DOT), HT_CTL_QUES,
     _______   , _______  , _______  , XXXXXXX  , XXXXXXX          , XXXXXXX  ,      _______ ,  _______          , XXXXXXX     , XXXXXXX   , XXXXXXX  , _______
   ),
 
-  [2] = LAYOUT_universal(
-    XXXXXXX   , JS_7     , JS_8     , JS_9     , JS_0     ,                            JS_HOME  , JS_LEFT  , JS_UP    , JS_RGHT  , JS_END   ,
-    JS_LSFT   , JS_4     , JS_5     , JS_6     , XXXXXXX  ,                            JS_PGUP  , JS_BTN1  , JS_DOWN  , JS_BTN2  , JS_RSFT  ,
-    JS_LCTL   , JS_1     , JS_2     , JS_3     , XXXXXXX  ,                            JS_PGDN  , JS_BTN4  , JS_BTN3  , JS_BTN5  , JS_RCTL  ,
+  [NUMBER_LAYER] = LAYOUT_universal(
+    XXXXXXX   , JS_7     , JS_8     , JS_9     , JS_0     ,                            JS_PGUP  , JS_HOME  , JS_UP    , JS_END   , XXXXXXX   ,
+    JS_LSFT   , JS_4     , JS_5     , JS_6     , XXXXXXX  ,                            JS_PGDN  , JS_LEFT  , JS_DOWN  , JS_RGHT  , JS_RSFT  ,
+    JS_LCTL   , JS_1     , JS_2     , JS_3     , XXXXXXX  ,                            XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  , JS_RCTL  ,
     _______   , _______  , _______  , XXXXXXX  , XXXXXXX  , XXXXXXX  ,      JS_DEL  ,  JS_RCTL  , XXXXXXX  , XXXXXXX  , XXXXXXX  , _______
   ),
 
-  [3] = LAYOUT_universal(
+  [FUNCTION_LAYER] = LAYOUT_universal(
     XXXXXXX   , JS_F7    , JS_F8    , JS_F9    , JS_F10   ,                            XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX , XXXXXXX ,
     JS_LSFT   , JS_F4    , JS_F5    , JS_F6    , JS_F11   ,                            SCRL_DVD , CPI_I100 , XXXXXXX  , XXXXXXX , JS_RSFT ,
     JS_LCTL   , JS_F1    , JS_F2    , JS_F3    , JS_F12   ,                            SCRL_DVI , CPI_D100 , XXXXXXX  , XXXXXXX , JS_RCTL ,
-    _______   , _______  , _______  , KBC_RST  , KBC_SAVE , XXXXXXX  ,      XXXXXXX ,  XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX , _______
+    _______   , _______  , _______  , XXXXXXX  , XXXXXXX  , XXXXXXX  ,      KBC_RST ,  KBC_SAVE , XXXXXXX  , XXXXXXX  , XXXXXXX , _______
   ),
+
+   [MOUSE_LAYER] = LAYOUT_universal(
+    XXXXXXX   , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  ,                            XXXXXXX  , XXXXXXX  , XXXXXXX        , XXXXXXX , XXXXXXX ,
+    JS_LSFT   , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  ,                            XXXXXXX  , JS_BTN1  , CK_SCROLL_MODE , JS_BTN2 , JS_RSFT ,
+    JS_LCTL   , XXXXXXX  , XXXXXXX  , XXXXXXX  , XXXXXXX  ,                            XXXXXXX  , JS_BTN4  , JS_BTN3        , JS_BTN5 , JS_RCTL ,
+    _______   , _______  , _______  , _______  , _______  ,_______  ,       XXXXXXX ,  XXXXXXX  , XXXXXXX  , XXXXXXX        , XXXXXXX , _______
+  ), 
 };
 // clang-format on
 
+// レイヤー切り替わり時のコールバック関数
 layer_state_t layer_state_set_user(layer_state_t state) {
-    // Auto enable scroll mode when the highest layer is 3
-    keyball_set_scroll_mode(get_highest_layer(state) == 3);
-    return state;
+  switch(get_highest_layer(remove_auto_mouse_layer(state, true))) {
+    case SYMBOL_LAYER ... FUNCTION_LAYER:
+      // remove_auto_mouse_target must be called to adjust state *before* setting enable
+      state = remove_auto_mouse_layer(state, false);
+      set_auto_mouse_enable(false);
+      break;
+    default:
+      set_auto_mouse_enable(true);
+      break;
+  }
+  return state;
 }
 
+// トラックボールの初期設定
+void pointing_device_init_user(void) {
+    set_auto_mouse_layer(MOUSE_LAYER); // only required if AUTO_MOUSE_DEFAULT_LAYER is not set to index of <mouse_layer>
+    set_auto_mouse_enable(true);         // always required before the auto mouse feature will work
+}
+
+// マウスボタンとして扱うカスタム関数
+bool is_mouse_record_kb(uint16_t keycode, keyrecord_t* record) {
+  switch(keycode) {
+    case JS_RGHT ... JS_UP:
+    case JS_BTN1 ... JS_BTN5:
+    case CK_SCROLL_MODE:
+      return true;
+    default:
+      return false;
+  }
+  return is_mouse_record_user(keycode, record);
+}
+
+// タップ判定
 bool is_tap (keyrecord_t *record) {
   return hold_timers[record->event.key.row][record->event.key.col]
   && timer_elapsed(hold_timers[record->event.key.row][record->event.key.col]) < TAPPING_TERM;
 }
 
+// ? を入力
 void tap_question(void){
   register_code(JS_RSFT);
   tap_code(JS_SLSH);
   unregister_code(JS_RSFT);
 };
 
+// Mod or KeyTap 判定
 void mod_tap_action(keyrecord_t *record, bool is_same_prev, uint8_t mod, void (*cb)(void) ) {
   if (record->event.pressed) {
     add_mods(MOD_BIT(mod));
@@ -111,6 +158,7 @@ void mod_tap_action(keyrecord_t *record, bool is_same_prev, uint8_t mod, void (*
   }
 }
 
+// キー入力時のコールバック関数
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   // prev keycode
   uint16_t prev_keycode = mem_keycode;
@@ -126,11 +174,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case HT_CTL_QUES: // hold: CTRL, tap: question
       mod_tap_action(record, is_same_prev, JS_RCTL, tap_question);
       return false;
+    case CK_SCROLL_MODE:
+        keyball_set_scroll_mode(record->event.pressed);
+      return false;
     default:
       return true;
   }
 }
 
+// タップ判定のカスタム関数
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case TD(TD_LBRC_LBRC):
@@ -144,11 +196,11 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
   }
 }
 
+// キーホールド後何も入力がなかった場合のカスタム関数
 bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case LT(1,JS_LNG2):
     case LT(3,JS_LNG1):
-    case LT(3,JS_ESC):
       return false;
     default:
       return true;
