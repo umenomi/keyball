@@ -94,6 +94,7 @@ typedef union {
     struct {
         uint8_t cpi : 7;
         uint8_t sdiv : 3; // scroll divider
+        bool swap_ctl_gui : 1;
     };
 } keyball_config_t;
 
@@ -129,6 +130,8 @@ typedef struct {
     uint16_t       last_kc;
     keypos_t       last_pos;
     report_mouse_t last_mouse;
+
+    bool swap_ctl_gui;
 } keyball_t;
 
 typedef enum {
@@ -172,3 +175,9 @@ uint8_t keyball_get_cpi(void);
 
 // TODO: document
 void keyball_set_cpi(uint8_t cpi);
+
+bool keyball_get_swap_ctl_gui(void);
+
+void keyball_set_swap_ctl_gui(bool is_swap);
+
+void toggle_swap_ctl_gui(void);

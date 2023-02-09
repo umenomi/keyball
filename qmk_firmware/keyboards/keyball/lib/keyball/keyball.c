@@ -40,6 +40,8 @@ keyball_t keyball = {
 
     .scroll_mode = false,
     .scroll_div  = 0,
+
+    .swap_ctl_gui = false,
 };
 
 //////////////////////////////////////////////////////////////////////////////
@@ -409,10 +411,12 @@ void keyball_oled_render_keyinfo(void) {
 
 void keyball_oled_render_layerinfo(void) {
 #ifdef OLED_ENABLE
-    // Format: `Layer:  {layer}`
+    // Format: `Layer:  {layer}  {Win or Mac}`
 
     oled_write_P(PSTR("Layer:"), false);
     oled_write(get_u8_str(get_highest_layer(layer_state), ' '), false);
+    oled_write_P(PSTR("  "), false);
+    oled_write(keyball_get_swap_ctl_gui() ? "Mac" : "Win", false);
     oled_write_ln_P(PSTR(" "), false);
 #endif
 }
@@ -455,6 +459,20 @@ void keyball_set_cpi(uint8_t cpi) {
     }
 }
 
+bool keyball_get_swap_ctl_gui(void) {
+    return keyball.swap_ctl_gui;
+}
+
+void keyball_set_swap_ctl_gui(bool is_swap) {
+    keyball.swap_ctl_gui = is_swap;
+    keymap_config.swap_lctl_lgui = keyball.swap_ctl_gui;
+    keymap_config.swap_rctl_rgui = keyball.swap_ctl_gui;
+}
+
+void toggle_swap_ctl_gui(void) {
+    keyball_set_swap_ctl_gui(!keyball_get_swap_ctl_gui());
+}
+
 //////////////////////////////////////////////////////////////////////////////
 // Keyboard hooks
 
@@ -473,6 +491,7 @@ void keyboard_post_init_kb(void) {
         keyball_config_t c = {.raw = eeconfig_read_kb()};
         keyball_set_cpi(c.cpi);
         keyball_set_scroll_div(c.sdiv);
+        keyball_set_swap_ctl_gui(c.swap_ctl_gui);
     }
 
     keyball_on_adjust_layout(KEYBALL_ADJUST_PENDING);
@@ -528,11 +547,13 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
             case KBC_RST:
                 keyball_set_cpi(0);
                 keyball_set_scroll_div(0);
+                keyball_set_swap_ctl_gui(false);
                 break;
             case KBC_SAVE: {
                 keyball_config_t c = {
                     .cpi  = keyball.cpi_value,
                     .sdiv = keyball.scroll_div,
+                    .swap_ctl_gui = keyball.swap_ctl_gui,
                 };
                 eeconfig_update_kb(c.raw);
             } break;
