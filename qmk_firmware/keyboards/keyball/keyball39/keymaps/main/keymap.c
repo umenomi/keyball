@@ -1,7 +1,7 @@
 #include QMK_KEYBOARD_H
 
 #include "quantum.h"
-#include "./keymap_jp.h"
+#include "../lib/custom/keymap_jp.h"
 
 uint16_t hold_timers[MATRIX_ROWS][MATRIX_COLS];
 uint16_t mem_keycode;
