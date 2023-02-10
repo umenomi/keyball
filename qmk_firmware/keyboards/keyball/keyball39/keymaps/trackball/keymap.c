@@ -53,13 +53,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [NUMBER_LAYER] = LAYOUT_universal(
   //┌───────────┬───────────┬───────────┬───────────┬───────────┐                             ┌───────────┬───────────┬───────────┬───────────┬───────────┐
   //│           │           │           │           │           │                             │           │           │           │           │           │
-      XXXXXXX,    JS_7,       JS_8,       JS_9,       JS_0,                                     XXXXXXX,    XXXXXXX,    JS_UP,      XXXXXXX,    XXXXXXX,
+      XXXXXXX,    JS_7,       JS_8,       JS_9,       JS_0,                                     JS_PGUP,    JS_HOME,    JS_UP,      JS_END,    XXXXXXX,
   //├───────────┼───────────┼───────────┼───────────┼───────────┤                             ├───────────┼───────────┼───────────┼───────────┼───────────┤
   //│           │           │           │           │           │                             │           │           │           │           │           │
-      JS_LSFT,    JS_4,       JS_5,       JS_6,       XXXXXXX,                                  JS_PGUP,    JS_LEFT,    JS_DOWN,    JS_RGHT,    JS_RSFT,
+      JS_LSFT,    JS_4,       JS_5,       JS_6,       XXXXXXX,                                  JS_PGDN,    JS_LEFT,    JS_DOWN,    JS_RGHT,    JS_RSFT,
   //├───────────┼───────────┼───────────┼───────────┼───────────┤                             ├───────────┼───────────┼───────────┼───────────┼───────────┤
   //│           │           │           │           │           │                             │           │           │           │           │           │
-      JS_LCTL,    JS_1,       JS_2,       JS_3,       XXXXXXX,                                  JS_PGDN,    JS_HOME,    XXXXXXX,    JS_END,     JS_RCTL,
+      JS_LCTL,    JS_1,       JS_2,       JS_3,       XXXXXXX,                                  XXXXXXX,    JS_BTN4,    XXXXXXX,    JS_BTN5,     JS_RCTL,
   //├───────────┼───────────┼───────────┼───────────┼───────────┼───────────┐     ┌───────────├───────────┼───────────┴───────────┴───────────┼───────────┤
   //│           │           │           │           │           │           │     │           │           │                                   │           │
       _______,    _______,    _______,    XXXXXXX,    XXXXXXX,    JS_SPC,           JS_DEL,     WM_CTL_ALT, XXXXXXX,    XXXXXXX,    XXXXXXX,    _______

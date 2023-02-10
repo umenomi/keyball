@@ -115,6 +115,16 @@ void pointing_device_init_user(void) {
     set_auto_mouse_enable(true);         // always required before the auto mouse feature will work
 }
 
+bool is_mouse_record_kb(uint16_t keycode, keyrecord_t* record) {
+    switch(keycode) {
+        case SCR_MODE:
+            return true;
+        default:
+            return false;
+    }
+    return  is_mouse_record_user(keycode, record);
+}
+
 #    endif
 
 
