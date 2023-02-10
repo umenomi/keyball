@@ -46,12 +46,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case HT_CTL_QUES: // hold: CTRL, tap: question
       mod_tap_action(record, is_same_prev, JS_RCTL, tap_question);
       return false;
-    case TOGG_CTL_GUI:
-      // ctl と gui 入れ替え(win mac 切換え)
+
+    case TOGG_WIN_MAC: // ctl と gui 入れ替え(win mac 切換え)
       if (record->event.pressed) {
-        toggle_swap_ctl_gui();
+        toggle_swap_win_mac();
       }
       return false;
+
+    case WM_CTL_ALT: ; // Win: CTL, Mac: Alt(Option)
+      uint16_t k = keyball_get_swap_win_mac() ? JS_RALT : JS_RCTL;
+      record->event.pressed ? register_code(k) : unregister_code(k);
+      return false;
+
+    case SCR_MODE:
+      keyball_set_scroll_mode(record->event.pressed);
+      return false;
+
     default:
       return true;
   }
@@ -60,15 +70,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 //////////////////////////////////////////////
 // Tap Dance Declarations
 //////////////////////////////////////////////
-enum {
-  TD_ESC_CAPS = 0,
-  TD_YEN_PIPE,
-  TD_HIHN_EQL,
-  TD_LBRC_LBRC,
-  TD_RBRC_RBRC,
-  TD_BSLSH_UDSCR
-};
-
 //Tap Dance Definitions
 qk_tap_dance_action_t tap_dance_actions[] = {
   [TD_ESC_CAPS]  = ACTION_TAP_DANCE_DOUBLE(JS_ESC, JS_CAPS),
@@ -83,10 +84,39 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 // Layer
 //////////////////////////////////////////////
 layer_state_t layer_state_set_user(layer_state_t state) {
-    // Auto enable scroll mode when the highest layer is 3
-    keyball_set_scroll_mode(get_highest_layer(state) == 3);
-    return state;
+#    ifdef POINTING_DEVICE_AUTO_MOUSE_ENABLE
+
+  switch(get_highest_layer(remove_auto_mouse_layer(state, true))) {
+    case SYMBOL_LAYER ... FUNCTION_LAYER:
+      // remove_auto_mouse_target must be called to adjust state *before* setting enable
+      state = remove_auto_mouse_layer(state, false);
+      set_auto_mouse_enable(false);
+      break;
+    default:
+      set_auto_mouse_enable(true);
+      break;
+  }
+
+#    else
+
+  // Auto enable scroll mode when the highest layer is FUNCTION_LAYER
+  keyball_set_scroll_mode(get_highest_layer(state) == FUNCTION_LAYER);
+
+#    endif
+  return state;
 }
+
+
+#    ifdef POINTING_DEVICE_AUTO_MOUSE_ENABLE
+
+// トラックボールの初期設定
+void pointing_device_init_user(void) {
+    set_auto_mouse_layer(MOUSE_LAYER); // only required if AUTO_MOUSE_DEFAULT_LAYER is not set to index of <mouse_layer>
+    set_auto_mouse_enable(true);         // always required before the auto mouse feature will work
+}
+
+#    endif
+
 
 //////////////////////////////////////////////
 // Tapping
@@ -107,6 +137,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case LT(1,JS_LNG2):
+    case LT(2,JS_LNG1):
     case LT(3,JS_LNG1):
     case LT(3,JS_ESC):
       return false;
