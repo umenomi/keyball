@@ -43,25 +43,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
 
   switch (keycode) {
-    case HT_CTL_QUES: // hold: CTRL, tap: question
-      mod_tap_action(record, is_same_prev, JS_RCTL, tap_question);
+    case HT_CTL_QUES: ;{// hold: CTRL, tap: question
+      uint16_t k = keyball_get_swap_win_mac() ? JS_RIGHT_GUI : JS_RCTL;
+      mod_tap_action(record, is_same_prev, k, tap_question);
       return false;
-
-    case TOGG_WIN_MAC: // ctl と gui 入れ替え(win mac 切換え)
+    }
+    case TOGG_WIN_MAC: {// ctl と gui 入れ替え(win mac 切換え)
       if (record->event.pressed) {
         toggle_swap_win_mac();
       }
       return false;
-
-    case WM_CTL_ALT: ; // Win: CTL, Mac: Alt(Option)
+    }
+    case WM_CTL_ALT: ; {// Win: CTL, Mac: Alt(Option)
       uint16_t k = keyball_get_swap_win_mac() ? JS_RALT : JS_RCTL;
       record->event.pressed ? register_code(k) : unregister_code(k);
       return false;
-
-    case SCR_MODE:
+    }
+    case SCR_MODE: {
       keyball_set_scroll_mode(record->event.pressed);
       return false;
-
+    }
     default:
       return true;
   }
