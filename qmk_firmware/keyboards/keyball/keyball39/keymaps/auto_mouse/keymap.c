@@ -88,7 +88,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,                                  XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,
   //├───────────┼───────────┼───────────┼───────────┼───────────┤                             ├───────────┼───────────┼───────────┼───────────┼───────────┤
   //│           │           │           │           │           │                             │           │           │           │           │           │
-      JS_LSFT,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,                                  XXXXXXX,    JS_BTN1,    SCR_MODE,   JS_BTN2,    JS_RSFT ,
+      JS_LSFT,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,                                  XXXXXXX,    JS_BTN1,    SCRL_MO,    JS_BTN2,    JS_RSFT ,
   //├───────────┼───────────┼───────────┼───────────┼───────────┤                             ├───────────┼───────────┼───────────┼───────────┼───────────┤
   //│           │           │           │           │           │                             │           │           │           │           │           │
       JS_LCTL,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,                                  XXXXXXX,    JS_BTN4,    JS_BTN3,    JS_BTN5,    JS_RCTL ,

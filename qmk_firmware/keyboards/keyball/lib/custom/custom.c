@@ -59,10 +59,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       record->event.pressed ? register_code(k) : unregister_code(k);
       return false;
     }
-    case SCR_MODE: {
-      keyball_set_scroll_mode(record->event.pressed);
-      return false;
-    }
     default:
       return true;
   }
@@ -118,7 +114,7 @@ void pointing_device_init_user(void) {
 
 bool is_mouse_record_kb(uint16_t keycode, keyrecord_t* record) {
     switch(keycode) {
-        case SCR_MODE:
+        case SCRL_MO:
             return true;
         default:
             return false;

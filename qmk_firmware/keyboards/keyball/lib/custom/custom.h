@@ -11,7 +11,6 @@ enum custum_keycodes {
   HT_CTL_QUES = KEYBALL_SAFE_RANGE,
   TOGG_WIN_MAC,
   WM_CTL_ALT,
-  SCR_MODE,
 };
 
 // tap dance keys
