@@ -1,16 +1,9 @@
 enum layers {
-  DEFAULT_LAYER = 0,
-  SYMBOL_LAYER,
-  NUMBER_LAYER,
-  FUNCTION_LAYER,
-  MOUSE_LAYER,
-};
-
-enum layers2 {
   _DEFAULT = 0,
   _LOWER,
   _RAISE,
   _ADJUST,
+  _MOUSE,
 };
 
 enum custum_keycodes {

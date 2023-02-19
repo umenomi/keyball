@@ -6,8 +6,6 @@
 //////////////////////////////////////////////
 uint16_t hold_timers[MATRIX_ROWS][MATRIX_COLS];
 uint16_t mem_keycode;
-static bool lower_pressed = false;
-static bool raise_pressed = false;
 
 bool is_tap (keyrecord_t *record) {
   return hold_timers[record->event.key.row][record->event.key.col]
@@ -66,45 +64,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // layter
     case LOWER: {
       if (record->event.pressed) {
-        lower_pressed = true;
-
         layer_on(_LOWER);
         update_tri_layer(_LOWER, _RAISE, _ADJUST);
       } else {
         layer_off(_LOWER);
         update_tri_layer(_LOWER, _RAISE, _ADJUST);
-
-        if (lower_pressed) {
-          tap_code(JS_LNG2);
-        }
-        lower_pressed = false;
       }
       return false;
     }
 
     case RAISE: {
       if (record->event.pressed) {
-        raise_pressed = true;
-
         layer_on(_RAISE);
         update_tri_layer(_LOWER, _RAISE, _ADJUST);
       } else {
         layer_off(_RAISE);
         update_tri_layer(_LOWER, _RAISE, _ADJUST);
-
-        if (raise_pressed) {
-          tap_code(JS_LNG1);
-        }
-        raise_pressed = false;
       }
       return false;
     }
 
     default:
-      if (record->event.pressed) {
-        lower_pressed = false;
-        raise_pressed = false;
-      }
       return true;
   }
 }
@@ -128,8 +108,11 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 layer_state_t layer_state_set_user(layer_state_t state) {
 #    ifdef POINTING_DEVICE_AUTO_MOUSE_ENABLE
 
+  // Auto enable scroll mode when the highest layer is FUNCTION_LAYER
+  keyball_set_scroll_mode(get_highest_layer(state) == _LOWER);
+
   switch(get_highest_layer(remove_auto_mouse_layer(state, true))) {
-    case SYMBOL_LAYER ... FUNCTION_LAYER:
+    case _LOWER ... _ADJUST:
       // remove_auto_mouse_target must be called to adjust state *before* setting enable
       state = remove_auto_mouse_layer(state, false);
       set_auto_mouse_enable(false);
@@ -141,15 +124,11 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 #    else
 
-#       ifdef LAYER_TO_LOWER_RAISE
   // Auto enable scroll mode when the highest layer is FUNCTION_LAYER
-  keyball_set_scroll_mode(get_highest_layer(state) == _LOWER);
-#       else
-  // Auto enable scroll mode when the highest layer is FUNCTION_LAYER
-  keyball_set_scroll_mode(get_highest_layer(state) == FUNCTION_LAYER);
-#       endif
+  keyball_set_scroll_mode(get_highest_layer(state) == _ADJUST);
 
 #    endif
+
   return state;
 }
 
@@ -158,7 +137,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 // トラックボールの初期設定
 void pointing_device_init_user(void) {
-    set_auto_mouse_layer(MOUSE_LAYER); // only required if AUTO_MOUSE_DEFAULT_LAYER is not set to index of <mouse_layer>
+    set_auto_mouse_layer(_MOUSE); // only required if AUTO_MOUSE_DEFAULT_LAYER is not set to index of <mouse_layer>
     set_auto_mouse_enable(true);         // always required before the auto mouse feature will work
 }
 
