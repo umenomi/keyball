@@ -6,6 +6,8 @@
 //////////////////////////////////////////////
 uint16_t hold_timers[MATRIX_ROWS][MATRIX_COLS];
 uint16_t mem_keycode;
+static bool lower_pressed = false;
+static bool raise_pressed = false;
 
 bool is_tap (keyrecord_t *record) {
   return hold_timers[record->event.key.row][record->event.key.col]
@@ -59,7 +61,50 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       record->event.pressed ? register_code(k) : unregister_code(k);
       return false;
     }
+
+    /////////////////
+    // layter
+    case LOWER: {
+      if (record->event.pressed) {
+        lower_pressed = true;
+
+        layer_on(_LOWER);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+      } else {
+        layer_off(_LOWER);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+
+        if (lower_pressed) {
+          tap_code(JS_LNG2);
+        }
+        lower_pressed = false;
+      }
+      return false;
+    }
+
+    case RAISE: {
+      if (record->event.pressed) {
+        raise_pressed = true;
+
+        layer_on(_RAISE);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+      } else {
+        layer_off(_RAISE);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+
+        if (raise_pressed) {
+          tap_code(JS_LNG1);
+        }
+        raise_pressed = false;
+      }
+      return false;
+    }
+
     default:
+      if (record->event.pressed) {
+        lower_pressed = false;
+        raise_pressed = false;
+      }
       return true;
   }
 }
@@ -96,8 +141,13 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 #    else
 
+#       ifdef LAYER_TO_LOWER_RAISE
+  // Auto enable scroll mode when the highest layer is FUNCTION_LAYER
+  keyball_set_scroll_mode(get_highest_layer(state) == _LOWER);
+#       else
   // Auto enable scroll mode when the highest layer is FUNCTION_LAYER
   keyball_set_scroll_mode(get_highest_layer(state) == FUNCTION_LAYER);
+#       endif
 
 #    endif
   return state;

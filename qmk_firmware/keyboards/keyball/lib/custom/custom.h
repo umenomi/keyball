@@ -3,7 +3,14 @@ enum layers {
   SYMBOL_LAYER,
   NUMBER_LAYER,
   FUNCTION_LAYER,
-  MOUSE_LAYER
+  MOUSE_LAYER,
+};
+
+enum layers2 {
+  _DEFAULT = 0,
+  _LOWER,
+  _RAISE,
+  _ADJUST,
 };
 
 enum custum_keycodes {
@@ -11,6 +18,8 @@ enum custum_keycodes {
   HT_CTL_QUES = KEYBALL_SAFE_RANGE,
   TOGG_WIN_MAC,
   WM_CTL_ALT,
+  LOWER,
+  RAISE,
 };
 
 // tap dance keys
