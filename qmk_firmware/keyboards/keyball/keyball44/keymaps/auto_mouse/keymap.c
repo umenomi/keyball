@@ -30,7 +30,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       XXXXXXX,    JS_Z,       JS_X,       JS_C,       JS_V,       JS_B,             JS_N,       JS_M,       JS_COMM,    JS_DOT,     JS_SLSH,    XXXXXXX,
   //└───────────┼───────────┼───────────┼───────────┼───────────┼───────────┤     ├───────────┼───────────┼───────────┴───────────┼───────────┼───────────┘
   //            │           │           │           │           │           │     │           │           │                       │           │
-                  JS_LNG2,    JS_LNG1,    LSFT_T(JS_SPC),LOWER,   RGUI_T(JS_ESC),   LCTL_T(JS_ENT),RAISE,   XXXXXXX,    XXXXXXX,    RALT_T(JS_TAB)
+                  JS_LNG2,    JS_LNG1,    RGUI_T(JS_ESC),LOWER,   LSFT_T(JS_SPC),   LCTL_T(JS_ENT),RAISE,   XXXXXXX,    XXXXXXX,    RALT_T(JS_TAB)
   //            └───────────┴───────────┴───────────┴───────────┴───────────┘     └───────────┴───────────┘                       └───────────┘
   ),
 
