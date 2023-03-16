@@ -88,10 +88,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,          XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    _______,
   //├───────────┼───────────┼───────────┼───────────┼───────────┼───────────┤     ├───────────┼───────────┼───────────┼───────────┼───────────┼───────────┤
   //│           │           │           │           │           │           │     │           │           │           │           │           │           │
-      _______,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,          XXXXXXX,    JS_BTN1,    JS_BTN3,    JS_BTN2,    XXXXXXX,    _______,
+      _______,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,          XXXXXXX,    JS_BTN1,    JS_BTN3,    JS_BTN2,    SCRL_MO,    _______,
   //├───────────┼───────────┼───────────┼───────────┼───────────┼───────────┤     ├───────────┼───────────┼───────────┼───────────┼───────────┼───────────┤
   //│           │           │           │           │           │           │     │           │           │           │           │           │           │
-      _______,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,          XXXXXXX,    JS_BTN4,    SCRL_MO,    JS_BTN5,    XXXXXXX,    _______,
+      _______,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,          XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    _______,
   //└───────────┼───────────┼───────────┼───────────┼───────────┼───────────┤     ├───────────┼───────────┼───────────┴───────────┼───────────┼───────────┘
   //            │           │           │           │           │           │     │           │           │                       │           │
                   _______,    _______,    _______,    _______,    _______,          _______,    _______,    XXXXXXX,    XXXXXXX,    _______
