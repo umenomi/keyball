@@ -125,7 +125,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 #    else
 
   // Auto enable scroll mode when the highest layer is FUNCTION_LAYER
-  keyball_set_scroll_mode(get_highest_layer(state) == _ADJUST);
+  keyball_set_scroll_mode(get_highest_layer(state) == _LOWER);
 
 #    endif
 

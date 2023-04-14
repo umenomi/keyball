@@ -35,7 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define TAP_CODE_DELAY 5
 
-#define IGNORE_MOD_TAP_INTERRUPT
+// #define IGNORE_MOD_TAP_INTERRUPT
 #define TAPPING_FORCE_HOLD
 
 #define KEYBALL_SCROLLSNAP_TENSION_THRESHOLD 1
@@ -43,4 +43,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define TAPPING_TERM 180
 #define TAPPING_TERM_PER_KEY
 
-#define RETRO_TAPPING_PER_KEY
+#define POINTING_DEVICE_AUTO_MOUSE_ENABLE
+// #define AUTO_MOUSE_TIME 10000
